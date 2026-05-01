@@ -8,14 +8,17 @@ from email.mime.multipart import MIMEMultipart
 app = FastAPI()
 
 #Modelo de entrada de dados
-class DadosSensor(BaseModel):
+class Dados_Sensor(BaseModel):
     bpm: int
     temperatura: float
     movimento: bool
     timestamp: datetime
 
+#variavel global para controle de estado
+ultimo_risco = "normal"
+
 #função para analise de risco
-def analisar_risco(dados: DadosSensor):
+def analisar_risco(dados: Dados_Sensor):
     risco = "baixo"
     estado = "normal"
 
@@ -33,35 +36,55 @@ def analisar_risco(dados: DadosSensor):
 
     return risco, estado
 
+#função para enviar email
 def enviar_email(assunto: str, mensagem: str, destinatario: str):
-    remetente = "seu_email@dominio.com"
-    senha = "sua_senha"  # ideal usar variáveis de ambiente
+    remetente = "seu_email@gmail.com" #usar variaveis de ambiente
+    senha = "sua_senha" #usar variaveis de ambiente
 
     msg = MIMEMultipart()
-    msg["From"] = remetente
-    msg["To"] = destinatario
-    msg["Subject"] = assunto
-
-    msg.attach(MIMEText(mensagem, "plain"))
+    msg['From'] = remetente
+    msg['to'] = destinatario
+    msg['subject'] = assunto
+    msg.attach(MIMEText(mensagem, 'plain'))
 
     try:
-        with smtplib.SMTP("smtp.gmail.com", 587) as servidor:
+        with smtplib.SMTP('smtp.gmail.com', 587) as servidor:
             servidor.starttls()
             servidor.login(remetente, senha)
             servidor.send_message(msg)
-        return "E-mail enviado com sucesso"
+            return "email enviado com sucesso"
     except Exception as e:
-        return f"Erro ao enviar e-mail: {e}"
+        return f'Erro ao enviar email: {str(e)}'
 
-#função para executar ação
+#função para executar a lógica de transição
 def executar_acao(risco: str, estado: str):
-    if risco == "alto":
-        assunto = "⚠️ ALERTA CRÍTICO DETECTADO"
-        mensagem = f"Foi detectado um risco ALTO: {estado}. Acione imediatamente a equipe responsavel."
-        resultado = enviar_email(assunto, mensagem, [EMAIL_ADDRESS])
-        return resultado
-    
-    elif risco == "moderado":
-        return f"Ação preventiva: registrar alerta ({estado})"
-    else:
-        return f"Ação: continuar monitoramento"
+    global ultimo_risco
+    resultado = "Nenhuma ação necessaria"
+
+    if risco != ultimo_risco:
+        if risco == "alto":
+            assunto = "⚠️ ALERTA CRÍTICO DETECTADO"
+            mensagem = f"Foi detectado um risco ALTO: {estado}. Acione imediatamente a equipe responsável."
+            resultado = enviar_email(assunto, mensagem, "destinatario@dominio.com")
+        elif risco == 'moderado':
+            assunto = '⚠️ ALERTA MODERADO DETECTADO'
+            mensagem = f'Foi detectado um risco MODERADO: {estado}. Resgistara alerta preditivo.'
+            resultado = enviar_email(assunto, mensagem, "destinatario@dominio.com")
+        else:
+            resultado = 'ação: continuar monitoramento'
+    #atualiza o ultimo risco
+    ultimo_risco = risco
+    return resultado 
+
+#endpoint principal
+@app.post('/dados')
+async def receber_dados(dados: Dados_Sensor):
+    risco, estado = analisar_risco(dados)
+    acao = executar_acao(risco, estado)
+    return{
+        'mensagem': 'dados processados com sucesso',
+        'dados': dados,
+        'risco': risco,
+        'estado': estado,
+        'acao': acao
+    }
