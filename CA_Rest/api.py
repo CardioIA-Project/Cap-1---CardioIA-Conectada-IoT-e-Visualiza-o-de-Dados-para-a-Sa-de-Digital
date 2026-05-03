@@ -7,10 +7,11 @@ from email.mime.multipart import MIMEMultipart
 import os
 from dotenv import load_dotenv
 
-#carrega as variaveis de ambiente
-load_dotenv()
-
 app = FastAPI()
+
+#carrega as variaveis de ambiente
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+load_dotenv(dotenv_path=os.path.join(BASE_DIR, ".env"))
 
 #Modelo de entrada de dados
 class Dados_Sensor(BaseModel):
@@ -20,7 +21,7 @@ class Dados_Sensor(BaseModel):
     timestamp: datetime
 
 #variavel global para controle de estado
-ultimo_risco = "normal"
+ultimo_risco = None
 
 #função para analise de risco
 def analisar_risco(dados: Dados_Sensor):
