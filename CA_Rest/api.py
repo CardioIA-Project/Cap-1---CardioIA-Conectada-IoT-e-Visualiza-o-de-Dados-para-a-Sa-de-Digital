@@ -4,6 +4,11 @@ from datetime import datetime
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+import os
+from dotenv import load_dotenv
+
+#carrega as variaveis de ambiente
+load_dotenv()
 
 app = FastAPI()
 
@@ -38,13 +43,13 @@ def analisar_risco(dados: Dados_Sensor):
 
 #função para enviar email
 def enviar_email(assunto: str, mensagem: str, destinatario: str):
-    remetente = "seu_email@gmail.com" #usar variaveis de ambiente
-    senha = "sua_senha" #usar variaveis de ambiente
+    remetente = os.getenv('EMAIL_USER')
+    senha = os.getenv('EMAIL_PASS')
 
     msg = MIMEMultipart()
     msg['From'] = remetente
-    msg['to'] = destinatario
-    msg['subject'] = assunto
+    msg['To'] = destinatario
+    msg['Subject'] = assunto
     msg.attach(MIMEText(mensagem, 'plain'))
 
     try:
@@ -56,7 +61,7 @@ def enviar_email(assunto: str, mensagem: str, destinatario: str):
     except Exception as e:
         return f'Erro ao enviar email: {str(e)}'
 
-#função para executar a lógica de transição
+#função para executar a lógica de transição 
 def executar_acao(risco: str, estado: str):
     global ultimo_risco
     resultado = "Nenhuma ação necessaria"
@@ -65,11 +70,11 @@ def executar_acao(risco: str, estado: str):
         if risco == "alto":
             assunto = "⚠️ ALERTA CRÍTICO DETECTADO"
             mensagem = f"Foi detectado um risco ALTO: {estado}. Acione imediatamente a equipe responsável."
-            resultado = enviar_email(assunto, mensagem, "destinatario@dominio.com")
+            resultado = enviar_email(assunto, mensagem, os.getenv('EMAIL_USER'))
         elif risco == 'moderado':
             assunto = '⚠️ ALERTA MODERADO DETECTADO'
-            mensagem = f'Foi detectado um risco MODERADO: {estado}. Resgistara alerta preditivo.'
-            resultado = enviar_email(assunto, mensagem, "destinatario@dominio.com")
+            mensagem = f'Foi detectado um risco MODERADO: {estado}. Registrar alerta preditivo.'
+            resultado = enviar_email(assunto, mensagem, os.getenv('EMAIL_USER'))
         else:
             resultado = 'ação: continuar monitoramento'
     #atualiza o ultimo risco
