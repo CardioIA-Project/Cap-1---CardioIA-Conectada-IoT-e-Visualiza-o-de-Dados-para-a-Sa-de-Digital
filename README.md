@@ -25,44 +25,56 @@
 
 ## 📜 Descrição
 
-*Descreva seu projeto com base no texto do PBL (até 600 palavras)*
+O projeto **CardioIA Conectada** é uma solução de saúde digital que integra IoT e Inteligência Artificial para o monitoramento contínuo de pacientes. O sistema utiliza sensores (simulados via ESP32 no Wokwi) para capturar batimentos cardíacos (BPM), temperatura corporal e detecção de movimento. 
+
+Os dados são transmitidos via protocolo **MQTT** e orquestrados pelo **Node-RED**, que encaminha as informações para um backend desenvolvido em **FastAPI**. A API analisa os sinais vitais em tempo real e, caso identifique padrões de risco (como arritmias ou febre), dispara alertas automáticos por e-mail para os responsáveis. O projeto também conta com uma camada de análise de dados através de **Notebooks Jupyter**, onde são realizadas análises de séries temporais para identificar tendências e anomalias históricas nos sinais vitais dos pacientes.
 
 
 ## 📁 Estrutura de pastas
 
 Dentre os arquivos e pastas presentes na raiz do projeto, definem-se:
 
-- <b>.github</b>: Nesta pasta ficarão os arquivos de configuração específicos do GitHub que ajudam a gerenciar e automatizar processos no repositório.
-
-- <b>assets</b>: aqui estão os arquivos relacionados a elementos não-estruturados deste repositório, como imagens.
-
-- <b>config</b>: Posicione aqui arquivos de configuração que são usados para definir parâmetros e ajustes do projeto.
-
-- <b>document</b>: aqui estão todos os documentos do projeto que as atividades poderão pedir. Na subpasta "other", adicione documentos complementares e menos importantes.
-
-- <b>scripts</b>: Posicione aqui scripts auxiliares para tarefas específicas do seu projeto. Exemplo: deploy, migrações de banco de dados, backups.
-
-- <b>src</b>: Todo o código fonte criado para o desenvolvimento do projeto ao longo das 7 fases.
-
-- <b>README.md</b>: arquivo que serve como guia e explicação geral sobre o projeto (o mesmo que você está lendo agora).
+- <b>CA_Rest</b>: Contém o backend da aplicação desenvolvido em FastAPI. Inclui a lógica de análise de risco e o serviço de disparo de e-mails.
+- <b>node-red</b>: Armazena os fluxos (JSON) utilizados no Node-RED para a integração entre o broker MQTT e a API REST.
+- <b>notebooks</b>: Contém os notebooks Jupyter com análises estatísticas e estudos de séries temporais dos dados coletados.
+- <b>sensor</b>: Código-fonte do firmware (C++/Arduino) para o ESP32, incluindo a simulação de sensores e lógica de cache offline.
+- <b>requirements.txt</b>: Arquivo contendo todas as dependências Python necessárias para o projeto.
+- <b>.env</b>: Arquivo para armazenamento de variáveis de ambiente sensíveis (credenciais de e-mail).
+- <b>README.md</b>: Este arquivo, contendo a documentação geral do projeto.
 
 ## 🔧 Como executar o código
 
-*Acrescentar as informações necessárias sobre pré-requisitos (IDEs, serviços, bibliotecas etc.) e instalação básica do projeto, descrevendo eventuais versões utilizadas. Colocar um passo a passo de como o leitor pode baixar o seu código e executá-lo a partir de sua máquina ou seu repositório. Considere a explicação organizada em fase.*
+### 1. Backend (API)
+1. Certifique-se de ter o **Python 3.10+** instalado.
+2. Navegue até a pasta `CA_Rest`.
+3. Crie um ambiente virtual: `python -m venv venv` e ative-o.
+4. Instale as dependências: `pip install -r ../requirements.txt`.
+5. Configure o arquivo `.env` na raiz do projeto com as chaves `EMAIL_USER` e `EMAIL_PASS`.
+6. Inicie o servidor: `uvicorn api:app --reload`.
 
+### 2. Sensor (IoT)
+1. Utilize o simulador **Wokwi** (ou a extensão do VS Code).
+2. Abra o arquivo `sensor/sketch.ino`.
+3. Certifique-se de que as bibliotecas `PubSubClient`, `DHTesp` e `WiFi` estão configuradas.
+4. Execute a simulação. O sensor enviará dados para o broker `broker.hivemq.com` no tópico `cardioia/paciente001/sinais`.
+
+### 3. Node-RED
+1. Importe o arquivo `node-red/flows (1).json` no seu Node-RED.
+2. Certifique-se de que o nó MQTT está conectado ao mesmo broker do sensor.
+3. Configure o nó HTTP Request para apontar para o endereço da API FastAPI (ex: `http://localhost:8000/dados`).
+
+### 4. Notebooks
+1. Abra o arquivo `notebooks/series_temporais.ipynb` em um ambiente Jupyter (ou no próprio VS Code).
+2. Execute as células para visualizar as análises de dados.
 
 ## 🗃 Histórico de lançamentos
 
-* 0.5.0 - XX/XX/2024
-    * 
-* 0.4.0 - XX/XX/2024
-    * 
-* 0.3.0 - XX/XX/2024
-    * 
-* 0.2.0 - XX/XX/2024
-    * 
-* 0.1.0 - XX/XX/2024
-    *
+* 1.0.0 - 07/05/2026
+    * Implementação da lógica de análise de risco na API.
+    * Integração completa entre Sensor -> MQTT -> Node-RED -> FastAPI.
+    * Adição de sistema de alertas via e-mail e persistência offline no sensor.
+* 0.1.0 - 15/04/2026
+    * Estrutura inicial do projeto e simulação básica de sensores.
 
 ## 📋 Licença
 
