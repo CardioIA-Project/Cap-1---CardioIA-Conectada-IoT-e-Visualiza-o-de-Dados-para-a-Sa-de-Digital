@@ -71,16 +71,23 @@ def executar_acao(risco: str, estado: str):
         if risco == "alto":
             assunto = "⚠️ ALERTA CRÍTICO DETECTADO"
             mensagem = f"Foi detectado um risco ALTO: {estado}. Acione imediatamente a equipe responsável."
-            resultado = enviar_email(assunto, mensagem, os.getenv('EMAIL_USER'))
+            try:
+                resultado = enviar_email(assunto, mensagem, os.getenv('EMAIL_USER'))
+            except Exception as e:
+                resultado = f"Erro ao enviar email: {e}"
         elif risco == 'moderado':
             assunto = '⚠️ ALERTA MODERADO DETECTADO'
             mensagem = f'Foi detectado um risco MODERADO: {estado}. Registrar alerta preditivo.'
-            resultado = enviar_email(assunto, mensagem, os.getenv('EMAIL_USER'))
+            try:
+                resultado = enviar_email(assunto, mensagem, os.getenv('EMAIL_USER'))
+            except Exception as e:
+                resultado = f"Erro ao enviar email: {e}"
         else:
             resultado = 'ação: continuar monitoramento'
-    #atualiza o ultimo risco
-    ultimo_risco = risco
-    return resultado 
+
+        ultimo_risco = risco
+    return resultado
+
 
 #endpoint principal
 @app.post('/dados')
@@ -89,7 +96,7 @@ async def receber_dados(dados: Dados_Sensor):
     acao = executar_acao(risco, estado)
     return{
         'mensagem': 'dados processados com sucesso',
-        'dados': dados,
+        'dados': dados.dict(),
         'risco': risco,
         'estado': estado,
         'acao': acao

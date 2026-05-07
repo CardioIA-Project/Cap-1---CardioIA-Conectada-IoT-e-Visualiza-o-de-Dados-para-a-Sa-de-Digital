@@ -1,0 +1,484 @@
+[
+    {
+        "id": "3306adffaedde0fa",
+        "type": "tab",
+        "label": "Fluxo 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "686e1eaa86af3df6",
+        "type": "tab",
+        "label": "Fluxo 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "2f9cb0f1f60449b7",
+        "type": "mqtt-broker",
+        "name": "HiveMQ Público",
+        "broker": "broker.hivemq.com",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "3baf6a560c54714b",
+        "type": "ui-base",
+        "name": "My Dashboard",
+        "path": "/dashboard",
+        "appIcon": "",
+        "includeClientData": true,
+        "acceptsClientConfig": [
+            "ui-notification",
+            "ui-control"
+        ],
+        "showPathInSidebar": false,
+        "headerContent": "page",
+        "navigationStyle": "default",
+        "titleBarStyle": "default",
+        "showReconnectNotification": true,
+        "notificationDisplayTime": 1,
+        "showDisconnectNotification": true,
+        "allowInstall": false
+    },
+    {
+        "id": "195606590788d7a3",
+        "type": "ui-theme",
+        "name": "Default Theme",
+        "colors": {
+            "surface": "#ffffff",
+            "primary": "#0094CE",
+            "bgPage": "#eeeeee",
+            "groupBg": "#ffffff",
+            "groupOutline": "#cccccc"
+        },
+        "sizes": {
+            "density": "default",
+            "pagePadding": "12px",
+            "groupGap": "12px",
+            "groupBorderRadius": "4px",
+            "widgetGap": "12px"
+        }
+    },
+    {
+        "id": "b6a7b092c8e65f69",
+        "type": "ui-page",
+        "name": "CardioIA",
+        "ui": "3baf6a560c54714b",
+        "path": "/cardioia",
+        "icon": "home",
+        "layout": "grid",
+        "theme": "195606590788d7a3",
+        "breakpoints": [
+            {
+                "name": "Default",
+                "px": "0",
+                "cols": "3"
+            },
+            {
+                "name": "Tablet",
+                "px": "576",
+                "cols": "6"
+            },
+            {
+                "name": "Small Desktop",
+                "px": "768",
+                "cols": "9"
+            },
+            {
+                "name": "Desktop",
+                "px": "1024",
+                "cols": "12"
+            }
+        ],
+        "order": 1,
+        "className": "",
+        "visible": "true",
+        "disabled": "false"
+    },
+    {
+        "id": "f701f8ba06241510",
+        "type": "ui-group",
+        "name": "Monitoramento do Paciente",
+        "page": "b6a7b092c8e65f69",
+        "width": "12",
+        "height": "8",
+        "order": 1,
+        "showTitle": true,
+        "className": "",
+        "visible": "true",
+        "disabled": "false",
+        "groupType": "default"
+    },
+    {
+        "id": "function_cardioia",
+        "type": "function",
+        "z": "686e1eaa86af3df6",
+        "name": "Separar dados CardioIA",
+        "func": "let dados = msg.payload;\n\nlet bpm = {\n    payload: dados.bpm,\n    topic: \"BPM\"\n};\n\nlet temperatura = {\n    payload: dados.temperatura,\n    topic: \"Temperatura\"\n};\n\nlet movimento = {\n    payload: dados.movimento,\n    topic: \"Movimento\"\n};\n\nlet timestamp = {\n    payload: dados.timestamp,\n    topic: \"Timestamp\"\n};\n\nlet http = {\n    payload: {\n        bpm: dados.bpm,\n        temperatura: dados.temperatura,\n        movimento: dados.movimento,\n        timestamp: dados.timestamp\n    }\n};\n\nreturn [bpm, temperatura, movimento, timestamp, http];",
+        "outputs": 5,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 450,
+        "y": 120,
+        "wires": [
+            [
+                "debug_bpm",
+                "80cc725520dbd167"
+            ],
+            [
+                "ae423bd46e756068",
+                "debug_temp"
+            ],
+            [
+                "debug_movimento",
+                "9c6e66c4b6a616ce"
+            ],
+            [
+                "debug_timestamp",
+                "2b848ac896fd8387"
+            ],
+            [
+                "3144da8851c8fa66"
+            ]
+        ]
+    },
+    {
+        "id": "debug_bpm",
+        "type": "debug",
+        "z": "686e1eaa86af3df6",
+        "name": "BPM",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 740,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "debug_temp",
+        "type": "debug",
+        "z": "686e1eaa86af3df6",
+        "name": "Temperatura",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 770,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "debug_movimento",
+        "type": "debug",
+        "z": "686e1eaa86af3df6",
+        "name": "Movimento",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 770,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "debug_timestamp",
+        "type": "debug",
+        "z": "686e1eaa86af3df6",
+        "name": "Timestamp",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 770,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "e61325696ab99501",
+        "type": "mqtt in",
+        "z": "686e1eaa86af3df6",
+        "name": "",
+        "topic": "cardioia/paciente001/sinais",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "2f9cb0f1f60449b7",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 170,
+        "y": 80,
+        "wires": [
+            [
+                "function_cardioia"
+            ]
+        ]
+    },
+    {
+        "id": "9c6e66c4b6a616ce",
+        "type": "function",
+        "z": "686e1eaa86af3df6",
+        "name": "Formatar movimento",
+        "func": "if (msg.payload === true || msg.payload === \"true\") {\n    msg.payload = \"Movimento detectado\";\n} else {\n    msg.payload = \"Sem movimento\";\n}\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 440,
+        "wires": [
+            [
+                "9e846e05e2d9b9e2"
+            ]
+        ]
+    },
+    {
+        "id": "9e846e05e2d9b9e2",
+        "type": "ui-text",
+        "z": "686e1eaa86af3df6",
+        "group": "f701f8ba06241510",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "Movimento",
+        "label": "Movimento",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#717171",
+        "wrapText": false,
+        "className": "",
+        "value": "payload",
+        "valueType": "msg",
+        "x": 670,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "2b848ac896fd8387",
+        "type": "ui-text",
+        "z": "686e1eaa86af3df6",
+        "group": "f701f8ba06241510",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "Horário de Leitura",
+        "label": "Horário de Leitura",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#717171",
+        "wrapText": false,
+        "className": "",
+        "value": "payload",
+        "valueType": "msg",
+        "x": 670,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "80cc725520dbd167",
+        "type": "ui-chart",
+        "z": "686e1eaa86af3df6",
+        "group": "f701f8ba06241510",
+        "name": "BPM",
+        "label": "Frequência Cardíaca",
+        "order": 9007199254740991,
+        "chartType": "line",
+        "category": "topic",
+        "categoryType": "msg",
+        "xAxisLabel": "",
+        "xAxisProperty": "",
+        "xAxisPropertyType": "timestamp",
+        "xAxisType": "time",
+        "xAxisFormat": "",
+        "xAxisFormatType": "auto",
+        "xmin": "",
+        "xmax": "",
+        "yAxisLabel": "",
+        "yAxisProperty": "payload",
+        "yAxisPropertyType": "msg",
+        "ymin": "40",
+        "ymax": "160",
+        "bins": 10,
+        "action": "append",
+        "stackSeries": false,
+        "pointShape": "circle",
+        "pointRadius": 4,
+        "showLegend": true,
+        "removeOlder": 1,
+        "removeOlderUnit": "3600",
+        "removeOlderPoints": "",
+        "colors": [
+            "#0095ff",
+            "#ff0000",
+            "#ff7f0e",
+            "#2ca02c",
+            "#a347e1",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "textColor": [
+            "#666666"
+        ],
+        "textColorDefault": true,
+        "gridColor": [
+            "#e5e5e5"
+        ],
+        "gridColorDefault": true,
+        "width": "0",
+        "height": "0",
+        "className": "",
+        "interpolation": "linear",
+        "x": 90,
+        "y": 360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ae423bd46e756068",
+        "type": "ui-gauge",
+        "z": "686e1eaa86af3df6",
+        "name": "Temperatura",
+        "group": "f701f8ba06241510",
+        "order": 0,
+        "value": "payload",
+        "valueType": "msg",
+        "width": 3,
+        "height": 3,
+        "gtype": "gauge-half",
+        "gstyle": "needle",
+        "title": "Temperatura",
+        "alwaysShowTitle": false,
+        "floatingTitlePosition": "top-left",
+        "units": "ºc",
+        "icon": "",
+        "prefix": "",
+        "suffix": "",
+        "segments": [
+            {
+                "from": "0",
+                "color": "#5cd65c",
+                "text": "",
+                "textType": "label"
+            },
+            {
+                "from": "4",
+                "color": "#ffc800",
+                "text": "",
+                "textType": "label"
+            },
+            {
+                "from": "7",
+                "color": "#ea5353",
+                "text": "",
+                "textType": "label"
+            }
+        ],
+        "min": "30",
+        "max": "45",
+        "sizeThickness": 16,
+        "sizeGap": 4,
+        "sizeKeyThickness": 8,
+        "styleRounded": true,
+        "styleGlow": false,
+        "className": "",
+        "x": 250,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3144da8851c8fa66",
+        "type": "http request",
+        "z": "686e1eaa86af3df6",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://SEU_IP:8000/dados",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "Content-Type",
+                "valueType": "other",
+                "valueValue": "application/json"
+            }
+        ],
+        "x": 760,
+        "y": 40,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d6342887b6cf7450",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "@flowfuse/node-red-dashboard": "1.30.2"
+        }
+    }
+]
