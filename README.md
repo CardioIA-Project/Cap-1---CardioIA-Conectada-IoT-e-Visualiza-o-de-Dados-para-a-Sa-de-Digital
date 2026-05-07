@@ -32,15 +32,24 @@ Os dados são transmitidos via protocolo **MQTT** e orquestrados pelo **Node-RED
 
 ## 📁 Estrutura de pastas
 
-Dentre os arquivos e pastas presentes na raiz do projeto, definem-se:
+Abaixo está a organização detalhada dos diretórios e arquivos vitais do projeto:
 
-- <b>CA_Rest</b>: Contém o backend da aplicação desenvolvido em FastAPI. Inclui a lógica de análise de risco e o serviço de disparo de e-mails.
-- <b>node-red</b>: Armazena os fluxos (JSON) utilizados no Node-RED para a integração entre o broker MQTT e a API REST.
-- <b>notebooks</b>: Contém os notebooks Jupyter com análises estatísticas e estudos de séries temporais dos dados coletados.
-- <b>sensor</b>: Código-fonte do firmware (C++/Arduino) para o ESP32, incluindo a simulação de sensores e lógica de cache offline.
-- <b>requirements.txt</b>: Arquivo contendo todas as dependências Python necessárias para o projeto.
-- <b>.env</b>: Arquivo para armazenamento de variáveis de ambiente sensíveis (credenciais de e-mail).
-- <b>README.md</b>: Este arquivo, contendo a documentação geral do projeto.
+```text
+📦 CardioIA-Conectada
+ ┣ 📂 CA_Rest/              # Backend da aplicação (FastAPI)
+ ┃ ┗ 📜 api.py              # Script principal com a lógica de análise de risco e envio de e-mails
+ ┣ 📂 node-red/             # Configurações de orquestração IoT
+ ┃ ┗ 📜 flows (1).json      # Fluxo exportado do Node-RED para integração MQTT -> API REST
+ ┣ 📂 notebooks/            # Análise de dados e Inteligência Artificial
+ ┃ ┗ 📜 series_temporais.ipynb # Estudo estatístico e modelos (Regressão Logística e LIF) para classificação de ECG
+ ┣ 📂 sensor/               # Firmware IoT para simulação no Wokwi (ESP32)
+ ┃ ┣ 📜 sketch.ino          # Código C++ do dispositivo (leitura de sensores, MQTT e cache offline)
+ ┃ ┣ 📜 diagram.json        # Esquemático de conexões dos sensores virtuais (Wokwi)
+ ┃ ┗ 📜 libraries.txt       # Dependências de bibliotecas C++ para o simulador
+ ┣ 📜 .env.exemple          # Exemplo de arquivo para configuração das credenciais de e-mail
+ ┣ 📜 requirements.txt      # Lista de dependências Python para rodar a API e os notebooks
+ ┗ 📜 README.md             # Documentação principal e instruções de uso do projeto
+```
 
 ## 🔧 Como executar o código
 
