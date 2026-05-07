@@ -77,6 +77,18 @@ Abaixo está a organização detalhada dos diretórios e arquivos vitais do proj
 1. Abra o arquivo `notebooks/series_temporais.ipynb` em um ambiente Jupyter (ou no próprio VS Code).
 2. Execute as células para visualizar as análises de dados.
 
+## 📸 Imagens do Projeto
+
+Abaixo estão as imagens ilustrando o funcionamento do Sensor, o fluxo no Node-RED e o Dashboard da aplicação:
+
+<div align="center">
+  <img src="assets/Captura%20de%20tela%202026-05-07%20201045.png" alt="Imagem 1" width="80%">
+  <br><br>
+  <img src="assets/WhatsApp%20Image%202026-05-06%20at%2020.44.34.jpeg" alt="Imagem 2" width="80%">
+  <br><br>
+  <img src="assets/WhatsApp%20Image%202026-05-06%20at%2020.45.12.jpeg" alt="Imagem 3" width="80%">
+</div>
+
 ## 🗃 Histórico de lançamentos
 
 * 1.0.0 - 07/05/2026
