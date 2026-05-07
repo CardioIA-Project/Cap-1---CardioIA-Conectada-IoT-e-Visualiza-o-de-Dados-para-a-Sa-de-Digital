@@ -48,7 +48,7 @@ Dentre os arquivos e pastas presentes na raiz do projeto, definem-se:
 1. Certifique-se de ter o **Python 3.10+** instalado.
 2. Na raiz do projeto, crie um ambiente virtual: `python -m venv venv` e ative-o.
 3. Instale as dependências: `pip install -r requirements.txt`.
-4. Configure o arquivo `.env` na raiz do projeto com as chaves `EMAIL_USER` e `EMAIL_PASS`.
+4. Para configurar as variáveis de ambiente, consulte o arquivo `.env.exemple`.
 5. Inicie o servidor com o comando: `uvicorn CA_Rest.api:app --host 0.0.0.0 --port 8000`
 
 ### 2. Sensor (IoT)
