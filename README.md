@@ -46,11 +46,10 @@ Dentre os arquivos e pastas presentes na raiz do projeto, definem-se:
 
 ### 1. Backend (API)
 1. Certifique-se de ter o **Python 3.10+** instalado.
-2. Navegue até a pasta `CA_Rest`.
-3. Crie um ambiente virtual: `python -m venv venv` e ative-o.
-4. Instale as dependências: `pip install -r ../requirements.txt`.
-5. Configure o arquivo `.env` na raiz do projeto com as chaves `EMAIL_USER` e `EMAIL_PASS`.
-6. Inicie o servidor: `uvicorn api:app --reload`.
+2. Na raiz do projeto, crie um ambiente virtual: `python -m venv venv` e ative-o.
+3. Instale as dependências: `pip install -r requirements.txt`.
+4. Configure o arquivo `.env` na raiz do projeto com as chaves `EMAIL_USER` e `EMAIL_PASS`.
+5. Inicie o servidor com o comando: `uvicorn CA_Rest.api:app --host 0.0.0.0 --port 8000`
 
 ### 2. Sensor (IoT)
 1. Utilize o simulador **Wokwi** (ou a extensão do VS Code).
@@ -59,9 +58,11 @@ Dentre os arquivos e pastas presentes na raiz do projeto, definem-se:
 4. Execute a simulação. O sensor enviará dados para o broker `broker.hivemq.com` no tópico `cardioia/paciente001/sinais`.
 
 ### 3. Node-RED
-1. Importe o arquivo `node-red/flows (1).json` no seu Node-RED.
-2. Certifique-se de que o nó MQTT está conectado ao mesmo broker do sensor.
-3. Configure o nó HTTP Request para apontar para o endereço da API FastAPI (ex: `http://localhost:8000/dados`).
+1. Certifique-se de ter o **Node-RED** instalado em sua máquina (via npm: `npm install -g --unsafe-perm node-red`).
+2. Inicie o Node-RED com o comando `node-red` e acesse o painel (geralmente em `http://localhost:1880`).
+3. Importe o arquivo `node-red/flows (1).json` no seu Node-RED.
+4. Certifique-se de que o nó MQTT está conectado ao mesmo broker do sensor.
+5. Configure o nó HTTP Request para apontar para o endereço da API FastAPI (ex: `http://SEU_IP:8000/dados`).
 
 ### 4. Notebooks
 1. Abra o arquivo `notebooks/series_temporais.ipynb` em um ambiente Jupyter (ou no próprio VS Code).
