@@ -30,6 +30,15 @@ O projeto **CardioIA Conectada** é uma solução de saúde digital que integra 
 Os dados são transmitidos via protocolo **MQTT** e orquestrados pelo **Node-RED**, que encaminha as informações para um backend desenvolvido em **FastAPI**. A API analisa os sinais vitais em tempo real e, caso identifique padrões de risco (como arritmias ou febre), dispara alertas automáticos por e-mail para os responsáveis. O projeto também conta com uma camada de análise de dados através de **Notebooks Jupyter**, onde são realizadas análises de séries temporais para identificar tendências e anomalias históricas nos sinais vitais dos pacientes.
 
 
+## 🧠 Inteligência Artificial e Machine Learning
+
+O projeto explora a análise de sinais vitais (ECG) aplicando técnicas de Inteligência Artificial para detectar arritmias (taquicardia). Foram implementadas e comparadas duas abordagens distintas no notebook `notebooks/series_temporais.ipynb`:
+
+* **Regressão Logística (Clássica):** Utiliza extração de *features* (média, variância, etc.) para inferência rápida e precisa na nuvem.
+* **Rede Neuromórfica (Modelo LIF):** Simula um neurônio biológico (*Leaky Integrate-and-Fire*) processando a série temporal de forma nativa e eficiente, demonstrando alto potencial para implementação em hardware Edge/IoT (wearables).
+
+Para mais detalhes sobre as métricas e a análise crítica dos modelos, consulte o [Relatório Comparativo](relatorio_comparativo_modelos.md).
+
 ## 📁 Estrutura de pastas
 
 Abaixo está a organização detalhada dos diretórios e arquivos vitais do projeto:
@@ -88,6 +97,10 @@ Abaixo estão as imagens ilustrando o funcionamento do Sensor, o fluxo no Node-R
   <br><br>
   <img src="assets/WhatsApp%20Image%202026-05-06%20at%2020.45.12.jpeg" alt="Imagem 3" width="80%">
 </div>
+
+## 🎥 Apresentação do Projeto
+
+* [Link para o vídeo de apresentação no YouTube (Não Listado) - **Adicione o link aqui**](#)
 
 ## 🗃 Histórico de lançamentos
 
