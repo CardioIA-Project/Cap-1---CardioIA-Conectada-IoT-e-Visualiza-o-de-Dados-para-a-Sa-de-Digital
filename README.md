@@ -41,7 +41,7 @@ Para mais detalhes sobre as métricas e a análise crítica dos modelos, consult
 
 ### 🎥 Apresentação do Machine Learning
 
-* [Link para o vídeo de apresentação no YouTube (Não Listado) - **https://youtu.be/7BnGy2FtI8Q**](#)
+https://youtu.be/7BnGy2FtI8Q
 
 ## 📁 Estrutura de pastas
 
