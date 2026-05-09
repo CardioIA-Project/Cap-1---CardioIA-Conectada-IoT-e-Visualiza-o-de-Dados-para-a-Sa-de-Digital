@@ -39,6 +39,10 @@ O projeto explora a análise de sinais vitais (ECG) aplicando técnicas de Intel
 
 Para mais detalhes sobre as métricas e a análise crítica dos modelos, consulte o [Relatório Comparativo](relatorio_comparativo_modelos.md).
 
+### 🎥 Apresentação do Machine Learning
+
+* [Link para o vídeo de apresentação no YouTube (Não Listado) - **https://youtu.be/7BnGy2FtI8Q**](#)
+
 ## 📁 Estrutura de pastas
 
 Abaixo está a organização detalhada dos diretórios e arquivos vitais do projeto:
@@ -97,10 +101,6 @@ Abaixo estão as imagens ilustrando o funcionamento do Sensor, o fluxo no Node-R
   <br><br>
   <img src="assets/WhatsApp%20Image%202026-05-06%20at%2020.45.12.jpeg" alt="Imagem 3" width="80%">
 </div>
-
-## 🎥 Apresentação do Projeto
-
-* [Link para o vídeo de apresentação no YouTube (Não Listado) - **Adicione o link aqui**](#)
 
 ## 🗃 Histórico de lançamentos
 
